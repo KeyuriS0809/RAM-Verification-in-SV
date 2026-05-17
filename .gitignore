@@ -1,0 +1,7 @@
+work/
+compile/
+*.log
+*.vcd
+*.asdb
+library.cfg
+sim
