@@ -9,14 +9,17 @@ class same_addr_wr extends single_write_read;
 
   //---------------- WRITE FULL FIFO = FULL OR NOT ?  ----------------
   task run();
-    trans = new();
     env.test_run();
+    
     $display("STARTS SIMULTANEOUS READ AND WRITE");
-    trans.wr_enb = 1;
-    trans.rd_enb = 1;
-    trans.rd_addr.rand_mode(0);
+
     repeat (`DEPTH) begin
+      trans = new();
+      trans.wr_enb = 1;
+      trans.rd_enb = 1;
+      trans.rd_addr.rand_mode(0);
       files_pkg :: raise();
+      
       Pre_ADDR = trans.wr_addr;
       void'(trans.randomize());
       trans.rd_addr = Pre_ADDR;
