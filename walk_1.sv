@@ -10,13 +10,16 @@ class walk_1 extends single_write_read;
 
   //---------------- WRITE FULL FIFO = FULL OR NOT ?  ----------------
   task run();
-    trans = new();
+    
     env.test_run();
     $display("STARTS ADDRESS WALKING 0");
-    trans.wr_enb = 1;
-    trans.rd_enb = 1;
+
     repeat (5) begin
+      trans = new();
+      trans.wr_enb = 1;
+      trans.rd_enb = 1;
       files_pkg :: raise();
+      
       Pre_ADDR = trans.wr_addr;
       trans.wr_addr = (1 << i);
       void'(trans.randomize(wr_data));
