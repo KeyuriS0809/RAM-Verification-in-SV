@@ -4,7 +4,6 @@ class ENV;
   monitor mon;
   scoreboard sb;
 
-  event gen_done;
   mailbox #(transcation) gen2dri;
   mailbox #(transcation) mon2soc;
 
@@ -15,8 +14,8 @@ class ENV;
     gen2dri = new();
     mon2soc = new();
 
-    gen = new(gen2dri, gen_done);
-    dri = new(gen2dri, vif, gen_done);
+    gen = new(gen2dri);
+    dri = new(gen2dri, vif);
     mon = new(mon2soc, vif);
     sb  = new(mon2soc);
   endfunction
