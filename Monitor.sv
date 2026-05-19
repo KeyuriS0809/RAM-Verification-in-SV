@@ -10,13 +10,16 @@ class monitor;
   endfunction
 
   task main;
-    trans = new();
 
     forever begin
 
       @(posedge vif.clk);
       @(negedge vif.clk);
 
+      if (vif.i_reset)
+        $display("----- TIME = %0t Reset Detected in Monitor",$time);
+      else begin 
+        trans = new();
       trans.wr_enb  = vif.wr_enb;
       trans.rd_enb  = vif.rd_enb;
       trans.wr_addr = vif.wr_addr;
@@ -26,6 +29,7 @@ class monitor;
 
       mon2score.put(trans);      
       trans.display("MONITOR");
+    end
     end
   endtask
 endclass
